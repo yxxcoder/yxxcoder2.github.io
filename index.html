@@ -1,597 +1,836 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<title>SBTI — 像素灵魂测试</title>
-<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
-<style>
-*{margin:0;padding:0;box-sizing:border-box}
-:root{
-  --bg:#0f0e17;--panel:#1a1a2e;--border:#3a3a5c;
-  --green:#00e676;--yellow:#ffd740;--red:#ff5252;--cyan:#18ffff;
-  --pink:#ff80ab;--purple:#b388ff;--white:#e8e8e8;--dim:#666680;
-  --gold:#ffab00;
-}
-html,body{height:100%;background:var(--bg);color:var(--white);overflow:hidden;
-  font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif}
-.pf{font-family:'Press Start 2P',monospace}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>🔞 变态指数测试 | HENTAI Index Test</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&display=swap');
 
-/* ===== SCANLINES ===== */
-body::after{content:'';position:fixed;top:0;left:0;right:0;bottom:0;
-  background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,.03) 2px,rgba(0,0,0,.03) 4px);
-  pointer-events:none;z-index:9999}
+        :root {
+            --primary: #ff2d55;
+            --primary-dark: #d4234a;
+            --bg-dark: #0a0a0f;
+            --bg-card: #16161f;
+            --bg-card-hover: #1e1e2a;
+            --text-primary: #ffffff;
+            --text-secondary: #8e8ea0;
+            --accent-purple: #bf5af2;
+            --accent-blue: #5e5ce6;
+            --accent-orange: #ff9f0a;
+            --accent-green: #30d158;
+            --gradient-hot: linear-gradient(135deg, #ff2d55, #ff6b35, #ff9500);
+            --gradient-purple: linear-gradient(135deg, #bf5af2, #5e5ce6);
+            --gradient-dark: linear-gradient(135deg, #1a1a2e, #16213e);
+        }
 
-/* ===== STARS BG ===== */
-#stars{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none}
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-/* ===== LAYOUT ===== */
-.app{position:relative;z-index:1;width:100%;height:100%;display:flex;align-items:center;justify-content:center}
-.ct{width:100%;max-width:420px;padding:16px;position:relative}
+        body {
+            font-family: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-primary);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
 
-.section{display:none;flex-direction:column;align-items:center}
-.section.active{display:flex;animation:pixelIn .3s steps(6)}
-@keyframes pixelIn{from{opacity:0;transform:scale(.9)}to{opacity:1;transform:scale(1)}}
-@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
-@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
-@keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-4px)}40%{transform:translateX(4px)}60%{transform:translateX(-2px)}80%{transform:translateX(2px)}}
-@keyframes flash{0%{opacity:1}100%{opacity:0}}
-@keyframes typewriter{from{width:0}to{width:100%}}
+        /* ===== Animated Background ===== */
+        .bg-animation {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            z-index: 0;
+            overflow: hidden;
+        }
 
-/* ===== PIXEL BOX ===== */
-.pbox{background:var(--panel);border:3px solid var(--border);
-  box-shadow:inset 0 0 0 1px rgba(255,255,255,.05), 4px 4px 0 0 rgba(0,0,0,.4);
-  position:relative}
-.pbox::before{content:'';position:absolute;top:-1px;left:-1px;right:-1px;height:2px;background:rgba(255,255,255,.1)}
+        .bg-animation .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.15;
+            animation: float 20s infinite ease-in-out;
+        }
 
-/* ===== LANDING ===== */
-.l-stars{font-size:10px;color:var(--yellow);margin-bottom:10px;letter-spacing:4px}
-.l-title{font-size:48px;font-weight:900;letter-spacing:4px;color:var(--green);
-  text-shadow:0 0 20px rgba(0,230,118,.4),4px 4px 0 rgba(0,0,0,.5);margin-bottom:4px}
-.l-sub{font-size:8px;color:var(--cyan);letter-spacing:2px;margin-bottom:24px}
-.l-desc{font-size:13px;color:var(--dim);margin-bottom:32px;text-align:center;line-height:1.8}
-.l-desc em{color:var(--yellow);font-style:normal}
+        .bg-animation .orb:nth-child(1) {
+            width: 400px; height: 400px;
+            background: var(--primary);
+            top: -100px; left: -100px;
+            animation-delay: 0s;
+        }
 
-.btn-start{padding:14px 40px;background:transparent;border:3px solid var(--green);
-  color:var(--green);font-size:14px;font-weight:700;cursor:pointer;letter-spacing:2px;
-  box-shadow:4px 4px 0 0 rgba(0,230,118,.3);transition:all .15s;position:relative;overflow:hidden}
-.btn-start:hover{background:var(--green);color:var(--bg);box-shadow:2px 2px 0 0 rgba(0,230,118,.5)}
-.btn-start:active{transform:translate(2px,2px);box-shadow:none}
-.btn-start .cursor{animation:blink 1s step-start infinite}
+        .bg-animation .orb:nth-child(2) {
+            width: 300px; height: 300px;
+            background: var(--accent-purple);
+            top: 50%; right: -100px;
+            animation-delay: -7s;
+        }
 
-.l-chars{display:flex;gap:8px;margin-top:20px;flex-wrap:wrap;justify-content:center}
-.l-char{width:36px;height:36px;display:flex;align-items:center;justify-content:center;
-  font-size:18px;background:var(--panel);border:2px solid var(--border);animation:float 2s ease infinite;animation-delay:calc(var(--d)*0.2s)}
+        .bg-animation .orb:nth-child(3) {
+            width: 350px; height: 350px;
+            background: var(--accent-blue);
+            bottom: -100px; left: 30%;
+            animation-delay: -14s;
+        }
 
-.l-badge{margin-top:16px;font-size:10px;color:var(--dim);letter-spacing:1px}
-.l-badge span{color:var(--gold)}
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            25% { transform: translate(50px, -30px) scale(1.1); }
+            50% { transform: translate(-30px, 50px) scale(0.9); }
+            75% { transform: translate(40px, 20px) scale(1.05); }
+        }
 
-/* ===== QUIZ ===== */
-.q-top{width:100%;display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
-.q-back{background:none;border:none;color:var(--dim);font-size:13px;cursor:pointer;
-  padding:6px 10px;transition:color .2s;display:flex;align-items:center;gap:4px;min-width:72px}
-.q-back:hover{color:var(--cyan)}
-.q-back.hidden{visibility:hidden}
-.q-back .arr{font-size:10px}
-.q-level{font-size:10px;color:var(--yellow);letter-spacing:1px}
+        /* ===== Container ===== */
+        .container {
+            position: relative;
+            z-index: 1;
+            max-width: 480px;
+            margin: 0 auto;
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
 
-/* HP Bar */
-.hp-wrap{width:100%;margin-bottom:16px}
-.hp-label{display:flex;justify-content:space-between;font-size:10px;margin-bottom:6px}
-.hp-label-l{color:var(--green)}
-.hp-label-r{color:var(--dim)}
-.hp-bar{width:100%;height:14px;background:#111;border:2px solid var(--border);position:relative;overflow:hidden}
-.hp-fill{height:100%;transition:width .4s steps(10);position:relative}
-.hp-fill.seg1{background:var(--red)}
-.hp-fill.seg2{background:var(--yellow)}
-.hp-fill.seg3{background:var(--green)}
-.hp-bar-shine{position:absolute;top:0;left:0;right:0;height:40%;background:rgba(255,255,255,.15)}
+        /* ===== Screens ===== */
+        .screen {
+            display: none;
+            flex: 1;
+            flex-direction: column;
+            animation: fadeIn 0.5s ease;
+        }
 
-/* Question Card */
-.q-card{width:100%;padding:20px 18px 22px}
-.q-header{display:flex;align-items:center;gap:8px;margin-bottom:14px}
-.q-num{font-size:10px;color:var(--green);letter-spacing:1px}
-.q-dim-tag{padding:2px 8px;font-size:10px;background:rgba(0,230,118,.1);border:1px solid rgba(0,230,118,.2);color:var(--green)}
-.q-text{font-size:17px;font-weight:700;line-height:1.7;margin-bottom:22px;min-height:56px}
+        .screen.active {
+            display: flex;
+        }
 
-/* Options */
-.opts{display:flex;flex-direction:column;gap:10px}
-.opt{padding:14px 16px;border:2px solid var(--border);background:rgba(255,255,255,.02);
-  cursor:pointer;transition:all .15s;display:flex;align-items:flex-start;gap:10px;position:relative}
-.opt::before{content:'▸';color:var(--dim);font-size:12px;opacity:0;transition:opacity .15s;margin-top:2px;flex-shrink:0}
-.opt:hover{border-color:var(--green);background:rgba(0,230,118,.05);transform:translateX(4px)}
-.opt:hover::before{opacity:1;color:var(--green)}
-.opt:active{transform:translateX(2px) scale(.98)}
-.opt.selected{border-color:var(--green);background:rgba(0,230,118,.1)}
-.opt.selected::before{opacity:1;color:var(--green)}
-.opt-key{min-width:26px;height:26px;display:flex;align-items:center;justify-content:center;
-  border:2px solid var(--border);font-size:11px;font-weight:700;flex-shrink:0;color:var(--dim);
-  font-family:'Press Start 2P',monospace}
-.opt.selected .opt-key{border-color:var(--green);color:var(--green);background:rgba(0,230,118,.1)}
-.opt-text{font-size:14px;line-height:1.5;padding-top:2px}
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
 
-/* ===== LOADING ===== */
-.ld-wrap{text-align:center;width:100%}
-.ld-emoji{font-size:56px;animation:float 1.5s ease infinite}
-.ld-title{font-size:14px;color:var(--green);margin-top:20px;letter-spacing:2px}
-.ld-bar-wrap{width:80%;max-width:280px;margin:20px auto 0}
-.ld-bar{height:16px;background:#111;border:2px solid var(--border);overflow:hidden;position:relative}
-.ld-bar-fill{height:100%;width:0;background:var(--green);transition:width .8s steps(20);position:relative}
-.ld-bar-fill::after{content:'';position:absolute;top:0;left:0;right:0;height:40%;background:rgba(255,255,255,.2)}
-.ld-pct{font-size:10px;color:var(--dim);margin-top:8px;letter-spacing:1px}
-.ld-tip{font-size:11px;color:var(--dim);margin-top:16px;opacity:.6}
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(40px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
 
-/* ===== RESULT ===== */
-.r-wrap{width:100%;text-align:center;overflow-y:auto;max-height:calc(100vh - 32px);padding-bottom:40px;scrollbar-width:none;-ms-overflow-style:none}
-.r-wrap::-webkit-scrollbar{display:none}
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
 
-/* Achievement banner */
-.r-achieve{padding:10px 0;margin-bottom:14px}
-.r-achieve-text{font-size:10px;color:var(--gold);letter-spacing:2px;animation:blink 2s step-start infinite}
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-4px); }
+            20%, 40%, 60%, 80% { transform: translateX(4px); }
+        }
 
-/* Main result card */
-.r-card{padding:28px 22px;margin-bottom:14px;text-align:center}
-.r-label{font-size:12px;color:var(--dim);margin-bottom:16px}
-.r-emoji{font-size:64px;display:block;margin-bottom:10px}
-.r-name{font-size:32px;font-weight:900;color:var(--white);margin-bottom:4px}
-.r-code{font-size:20px;font-weight:900;color:var(--green);letter-spacing:4px;
-  text-shadow:0 0 10px rgba(0,230,118,.4);margin-bottom:14px}
-.r-line{width:40px;height:3px;background:var(--green);margin:0 auto 14px}
-.r-tagline{font-size:12px;color:var(--yellow);margin-bottom:18px}
-.r-desc{font-size:13px;line-height:1.9;color:#aaa;text-align:left}
+        @keyframes countUp {
+            from { opacity: 0; transform: scale(0.5); }
+            to { opacity: 1; transform: scale(1); }
+        }
 
-.r-tags{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin-top:16px}
-.r-tag{padding:3px 10px;font-size:10px;border:1px solid var(--green);color:var(--green);background:rgba(0,230,118,.06)}
+        /* ===== Cover Screen ===== */
+        .cover {
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            gap: 30px;
+            padding: 40px 20px;
+        }
 
-/* Radar & dims */
-.r-dark{padding:20px 16px;margin-bottom:14px}
-.r-dark-title{font-size:11px;color:var(--dim);margin-bottom:10px;letter-spacing:1px}
-.r-dim-tags{display:flex;flex-wrap:wrap;gap:6px;justify-content:center}
-.dt{padding:4px 10px;font-size:10px;font-weight:500}
-.dt.h{border:1px solid rgba(0,230,118,.3);color:var(--green);background:rgba(0,230,118,.08)}
-.dt.m{border:1px solid rgba(255,215,64,.3);color:var(--yellow);background:rgba(255,215,64,.08)}
-.dt.l{border:1px solid rgba(24,255,255,.3);color:var(--cyan);background:rgba(24,255,255,.08)}
+        .cover-icon {
+            font-size: 80px;
+            animation: pulse 2s infinite;
+        }
 
-/* Buttons */
-.r-btns{display:flex;gap:10px;justify-content:center;margin-top:10px}
-.btn-r{padding:12px 24px;border:2px solid;font-size:12px;font-weight:700;cursor:pointer;
-  letter-spacing:1px;background:transparent;transition:all .15s;box-shadow:3px 3px 0 0 rgba(0,0,0,.3)}
-.btn-r:hover{transform:translate(-1px,-1px);box-shadow:4px 4px 0 0 rgba(0,0,0,.4)}
-.btn-r:active{transform:translate(2px,2px);box-shadow:none}
-.btn-r.p{border-color:var(--green);color:var(--green)}
-.btn-r.p:hover{background:var(--green);color:var(--bg)}
-.btn-r.s{border-color:var(--dim);color:var(--dim)}
-.btn-r.s:hover{border-color:var(--cyan);color:var(--cyan)}
+        .cover h1 {
+            font-size: 36px;
+            font-weight: 900;
+            background: var(--gradient-hot);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1.3;
+        }
 
-/* Screen flash */
-.flash{position:fixed;top:0;left:0;right:0;bottom:0;background:#fff;pointer-events:none;z-index:200;animation:flash .4s ease forwards}
+        .cover h1 .en {
+            display: block;
+            font-size: 14px;
+            font-weight: 400;
+            letter-spacing: 4px;
+            -webkit-text-fill-color: var(--text-secondary);
+            margin-top: 8px;
+        }
 
-#confetti-canvas{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:100}
+        .cover p {
+            color: var(--text-secondary);
+            font-size: 15px;
+            line-height: 1.6;
+        }
 
-/* Mobile */
-@media(max-width:420px){
-  .ct{padding:12px}
-  .l-title{font-size:40px}
-  .q-card{padding:16px 14px 18px}
-  .q-text{font-size:15px}
-  .opt{padding:12px 14px}
-  .opt-text{font-size:13px}
-  .r-name{font-size:26px}
-  .r-code{font-size:18px}
-  .r-emoji{font-size:52px}
-}
-@media(max-width:360px){
-  .l-title{font-size:34px}
-  .btn-start{padding:12px 30px;font-size:12px}
-}
-</style>
+        .cover .warning-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(255, 45, 85, 0.15);
+            border: 1px solid rgba(255, 45, 85, 0.3);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 13px;
+            color: var(--primary);
+        }
+
+        .cover .stats {
+            display: flex;
+            gap: 30px;
+            justify-content: center;
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+
+        .cover .stats span strong {
+            color: var(--accent-orange);
+            font-size: 18px;
+        }
+
+        /* ===== Age Gate ===== */
+        .age-gate {
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            gap: 24px;
+        }
+
+        .age-gate .icon-18 {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: var(--gradient-hot);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            font-weight: 900;
+            margin: 0 auto;
+        }
+
+        .age-gate h2 {
+            font-size: 24px;
+            font-weight: 700;
+        }
+
+        .age-gate p {
+            color: var(--text-secondary);
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .age-btns {
+            display: flex;
+            gap: 12px;
+            width: 100%;
+            max-width: 320px;
+            margin: 0 auto;
+        }
+
+        /* ===== Buttons ===== */
+        .btn {
+            flex: 1;
+            padding: 16px 24px;
+            border-radius: 16px;
+            border: none;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: inherit;
+        }
+
+        .btn-primary {
+            background: var(--gradient-hot);
+            color: white;
+            box-shadow: 0 4px 20px rgba(255, 45, 85, 0.4);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 30px rgba(255, 45, 85, 0.5);
+        }
+
+        .btn-primary:active {
+            transform: translateY(0);
+        }
+
+        .btn-secondary {
+            background: var(--bg-card);
+            color: var(--text-secondary);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .btn-secondary:hover {
+            background: var(--bg-card-hover);
+        }
+
+        .btn-full {
+            width: 100%;
+            max-width: 320px;
+            margin: 0 auto;
+            display: block;
+        }
+
+        /* ===== Quiz Screen ===== */
+        .quiz-header {
+            margin-bottom: 20px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 6px;
+            background: rgba(255,255,255,0.08);
+            border-radius: 3px;
+            overflow: hidden;
+            margin-bottom: 16px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--gradient-hot);
+            border-radius: 3px;
+            transition: width 0.4s ease;
+        }
+
+        .quiz-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+
+        .quiz-meta .q-num {
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .question-card {
+            background: var(--bg-card);
+            border-radius: 20px;
+            padding: 28px 24px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(255,255,255,0.06);
+            animation: slideIn 0.4s ease;
+        }
+
+        .question-card .q-category {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 8px;
+            font-size: 11px;
+            font-weight: 500;
+            margin-bottom: 14px;
+            background: rgba(191, 90, 242, 0.15);
+            color: var(--accent-purple);
+        }
+
+        .question-card h3 {
+            font-size: 18px;
+            font-weight: 600;
+            line-height: 1.6;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            flex: 1;
+        }
+
+        .option-btn {
+            width: 100%;
+            padding: 16px 20px;
+            border-radius: 14px;
+            border: 1px solid rgba(255,255,255,0.08);
+            background: var(--bg-card);
+            color: var(--text-primary);
+            font-size: 15px;
+            font-weight: 400;
+            text-align: left;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: inherit;
+            line-height: 1.5;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        .option-btn:hover {
+            background: var(--bg-card-hover);
+            border-color: rgba(255, 45, 85, 0.3);
+            transform: translateX(4px);
+        }
+
+        .option-btn:active {
+            transform: translateX(2px) scale(0.98);
+        }
+
+        .option-btn .opt-label {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 24px;
+            height: 24px;
+            border-radius: 8px;
+            background: rgba(255,255,255,0.08);
+            font-size: 12px;
+            font-weight: 600;
+            flex-shrink: 0;
+            margin-top: 1px;
+        }
+
+        .option-btn.selected {
+            background: rgba(255, 45, 85, 0.12);
+            border-color: var(--primary);
+        }
+
+        .option-btn.selected .opt-label {
+            background: var(--primary);
+        }
+
+        /* ===== Loading Screen ===== */
+        .loading {
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            gap: 30px;
+        }
+
+        .loading-ring {
+            width: 100px;
+            height: 100px;
+            position: relative;
+            margin: 0 auto;
+        }
+
+        .loading-ring svg {
+            width: 100%;
+            height: 100%;
+            animation: spin 2s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .loading-ring circle {
+            fill: none;
+            stroke-width: 4;
+            stroke-linecap: round;
+        }
+
+        .loading-ring .track {
+            stroke: rgba(255,255,255,0.05);
+        }
+
+        .loading-ring .progress {
+            stroke: var(--primary);
+            stroke-dasharray: 251;
+            stroke-dashoffset: 100;
+            animation: dash 2s ease-in-out infinite;
+        }
+
+        @keyframes dash {
+            0% { stroke-dashoffset: 251; }
+            50% { stroke-dashoffset: 50; }
+            100% { stroke-dashoffset: 251; }
+        }
+
+        .loading h2 {
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        .loading .loading-tips {
+            font-size: 13px;
+            color: var(--text-secondary);
+            transition: opacity 0.3s;
+        }
+
+        /* ===== Result Screen ===== */
+        .result {
+            align-items: center;
+            text-align: center;
+            padding-bottom: 40px;
+        }
+
+        .result-header {
+            width: 100%;
+            padding: 30px 20px;
+            background: var(--bg-card);
+            border-radius: 24px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(255,255,255,0.06);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .result-header::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 4px;
+            background: var(--gradient-hot);
+        }
+
+        .result-persona-icon {
+            font-size: 64px;
+            margin-bottom: 12px;
+            animation: countUp 0.6s ease;
+        }
+
+        .result-title {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+        }
+
+        .result-persona-name {
+            font-size: 28px;
+            font-weight: 900;
+            background: var(--gradient-hot);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 6px;
+        }
+
+        .result-persona-en {
+            font-size: 13px;
+            color: var(--text-secondary);
+            letter-spacing: 2px;
+            margin-bottom: 16px;
+        }
+
+        .result-score {
+            display: inline-flex;
+            align-items: baseline;
+            gap: 4px;
+            animation: countUp 0.8s ease;
+        }
+
+        .result-score .number {
+            font-size: 56px;
+            font-weight: 900;
+            background: var(--gradient-hot);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .result-score .unit {
+            font-size: 18px;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .result-rarity {
+            margin-top: 12px;
+            padding: 6px 14px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 500;
+            background: rgba(255, 159, 10, 0.12);
+            color: var(--accent-orange);
+            display: inline-block;
+        }
+
+        /* Radar Chart */
+        .radar-section {
+            width: 100%;
+            background: var(--bg-card);
+            border-radius: 20px;
+            padding: 24px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(255,255,255,0.06);
+        }
+
+        .radar-section h4 {
+            font-size: 15px;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        .radar-chart {
+            width: 240px;
+            height: 240px;
+            margin: 0 auto 20px;
+        }
+
+        .dimension-bars {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .dim-bar {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .dim-bar .dim-name {
+            font-size: 13px;
+            width: 60px;
+            flex-shrink: 0;
+            color: var(--text-secondary);
+        }
+
+        .dim-bar .dim-track {
+            flex: 1;
+            height: 8px;
+            background: rgba(255,255,255,0.06);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .dim-bar .dim-fill {
+            height: 100%;
+            border-radius: 4px;
+            transition: width 1s ease;
+        }
+
+        .dim-bar .dim-val {
+            font-size: 13px;
+            font-weight: 600;
+            width: 32px;
+            text-align: right;
+        }
+
+        /* Description */
+        .result-desc {
+            width: 100%;
+            background: var(--bg-card);
+            border-radius: 20px;
+            padding: 24px;
+            margin-bottom: 20px;
+            text-align: left;
+            border: 1px solid rgba(255,255,255,0.06);
+        }
+
+        .result-desc h4 {
+            font-size: 15px;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .result-desc p {
+            font-size: 14px;
+            line-height: 1.8;
+            color: var(--text-secondary);
+        }
+
+        .result-desc .highlight {
+            color: var(--primary);
+            font-weight: 500;
+        }
+
+        /* Share Section */
+        .result-actions {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .result-actions .btn {
+            border-radius: 14px;
+            font-size: 15px;
+        }
+
+        /* ===== Under-age Screen ===== */
+        .underage {
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            gap: 20px;
+        }
+
+        .underage .icon-bye {
+            font-size: 80px;
+        }
+
+        .underage h2 {
+            font-size: 24px;
+        }
+
+        .underage p {
+            color: var(--text-secondary);
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        /* ===== Share Poster (hidden, for capture) ===== */
+        #poster-canvas {
+            position: fixed;
+            left: -9999px;
+            top: 0;
+        }
+
+        /* ===== Toast ===== */
+        .toast {
+            position: fixed;
+            bottom: 80px;
+            left: 50%;
+            transform: translateX(-50%) translateY(20px);
+            background: rgba(30,30,42,0.95);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 12px;
+            font-size: 14px;
+            opacity: 0;
+            transition: all 0.3s ease;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        /* ===== Responsive ===== */
+        @media (max-width: 380px) {
+            .cover h1 { font-size: 28px; }
+            .result-score .number { font-size: 44px; }
+            .question-card h3 { font-size: 16px; }
+        }
+    </style>
 </head>
 <body>
-<canvas id="stars"></canvas>
-<canvas id="confetti-canvas"></canvas>
-
-<div class="app">
-<div class="ct">
-
-  <!-- ===== LANDING ===== -->
-  <div id="sec-landing" class="section active">
-    <div class="l-stars pf">★ ★ ★ ★ ★</div>
-    <div class="l-title">SBTI</div>
-    <div class="l-sub pf">SILLY BIG PERSONALITY TEST</div>
-    <div class="l-desc">
-      <em>15</em> 道灵魂拷问 · <em>2</em> 分钟 · <em>25</em> 种人格<br>
-      MBTI已过时，SBTI才是版本答案
+    <div class="bg-animation">
+        <div class="orb"></div>
+        <div class="orb"></div>
+        <div class="orb"></div>
     </div>
-    <button class="btn-start" onclick="startQuiz()">
-      <span class="cursor">▶</span> 开 始 测 试
-    </button>
-    <div class="l-chars">
-      <div class="l-char" style="--d:0">⚰️</div>
-      <div class="l-char" style="--d:1">👔</div>
-      <div class="l-char" style="--d:2">🐒</div>
-      <div class="l-char" style="--d:3">😴</div>
-      <div class="l-char" style="--d:4">💃</div>
-      <div class="l-char" style="--d:5">🤔</div>
-      <div class="l-char" style="--d:6">🏃</div>
-      <div class="l-char" style="--d:7">🍺</div>
-      <div class="l-char" style="--d:8">💩</div>
-      <div class="l-char" style="--d:9">🎭</div>
-    </div>
-    <div class="l-badge">🎮 已有 <span>2,847,293</span> 人通关</div>
-  </div>
 
-  <!-- ===== QUIZ ===== -->
-  <div id="sec-quiz" class="section">
-    <div class="q-top">
-      <button class="q-back hidden" id="btn-back" onclick="goBack()">
-        <span class="arr pf">◄</span> 上一题
-      </button>
-      <div class="q-level pf" id="q-level">LEVEL 01/15</div>
-    </div>
-    <div class="hp-wrap">
-      <div class="hp-label">
-        <span class="hp-label-l pf" id="hp-left">EXP</span>
-        <span class="hp-label-r pf" id="hp-right">0%</span>
-      </div>
-      <div class="hp-bar">
-        <div class="hp-fill seg3" id="hp-fill" style="width:0%">
-          <div class="hp-bar-shine"></div>
+    <div class="container">
+        <!-- ===== 1. Cover Screen ===== -->
+        <div class="screen active" id="screen-cover">
+            <div class="cover">
+                <div class="cover-icon">🔞</div>
+                <h1>
+                    变态指数测试
+                    <span class="en">HENTAI INDEX TEST</span>
+                </h1>
+                <div class="warning-badge">⚠️ 本测试仅供18岁以上成人娱乐</div>
+                <p>通过 12 道精心设计的灵魂拷问<br>测出你内心深处隐藏的「变态指数」<br>你，敢直面真实的自己吗？</p>
+                <div class="stats">
+                    <span>🔥 <strong id="fake-count">847,362</strong> 人已测</span>
+                    <span>⏱ 约 3 分钟</span>
+                </div>
+                <button class="btn btn-primary btn-full" onclick="showScreen('screen-age')">
+                    开始测试 →
+                </button>
+            </div>
         </div>
-      </div>
+
+        <!-- ===== 2. Age Gate ===== -->
+        <div class="screen" id="screen-age">
+            <div class="age-gate">
+                <div class="icon-18">18+</div>
+                <h2>年龄确认</h2>
+                <p>本测试包含成人向内容<br>请确认你已年满18周岁</p>
+                <div class="age-btns">
+                    <button class="btn btn-secondary" onclick="showScreen('screen-underage')">未满18岁</button>
+                    <button class="btn btn-primary" onclick="startQuiz()">已满18岁</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== 3. Under-age Screen ===== -->
+        <div class="screen" id="screen-underage">
+            <div class="underage">
+                <div class="icon-bye">👶</div>
+                <h2>小朋友请回</h2>
+                <p>等你长大了再来吧～<br>现在去好好写作业！</p>
+                <button class="btn btn-secondary btn-full" onclick="showScreen('screen-cover')" style="max-width:200px">乖乖回去</button>
+            </div>
+        </div>
+
+        <!-- ===== 4. Quiz Screen ===== -->
+        <div class="screen" id="screen-quiz">
+            <div class="quiz-header">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progress-fill"></div>
+                </div>
+                <div class="quiz-meta">
+                    <span>第 <span class="q-num" id="q-current">1</span> / <span id="q-total">12</span> 题</span>
+                    <span id="q-dimension"></span>
+                </div>
+            </div>
+            <div class="question-card" id="question-card">
+                <span class="q-category" id="q-category"></span>
+                <h3 id="q-text"></h3>
+            </div>
+            <div class="options" id="options-container"></div>
+        </div>
+
+        <!-- ===== 5. Loading Screen ===== -->
+        <div class="screen" id="screen-loading">
+            <div class="loading">
+                <div class="loading-ring">
+                    <svg viewBox="0 0 100 100">
+                        <circle class="track" cx="50" cy="50" r="40"/>
+                        <circle class="progress" cx="50" cy="50" r="40"/>
+                    </svg>
+                </div>
+                <h2>正在深度分析你的变态灵魂...</h2>
+                <p class="loading-tips" id="loading-tips">扫描脑内剧场中...</p>
+            </div>
+        </div>
+
+        <!-- ===== 6. Result Screen ===== -->
+        <div class="screen" id="screen-result">
+            <div class="result">
+                <div class="result-header" id="result-header">
+                    <div class="result-persona-icon" id="r-icon"></div>
+                    <div class="result-title">你的变态人格是</div>
+                    <div class="result-persona-name" id="r-name"></div>
+                    <div class="result-persona-en" id="r-en"></div>
+                    <div class="result-score">
+                        <span class="number" id="r-score">0</span>
+                        <span class="unit">/ 100</span>
+                    </div>
+                    <div class="result-rarity" id="r-rarity"></div>
+                </div>
+
+                <div class="radar-section">
+                    <h4>📊 五维变态图谱</h4>
+                    <canvas class="radar-chart" id="radar-canvas" width="480" height="480"></canvas>
+                    <div class="dimension-bars" id="dim-bars"></div>
+                </div>
+
+                <div class="result-desc" id="result-desc">
+                    <h4>🔍 人格解读</h4>
+                    <p id="r-desc"></p>
+                </div>
+
+                <div class="result-actions">
+                    <button class="btn btn-primary" onclick="shareResult()">📤 生成分享海报</button>
+                    <button class="btn btn-secondary" onclick="restart()">🔄 再测一次</button>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="q-card pbox" id="q-card">
-      <div class="q-header">
-        <span class="q-num pf" id="q-num">Q01</span>
-        <span class="q-dim-tag" id="q-dim"></span>
-      </div>
-      <div class="q-text" id="q-text"></div>
-      <div class="opts" id="q-opts"></div>
-    </div>
-  </div>
 
-  <!-- ===== LOADING ===== -->
-  <div id="sec-loading" class="section">
-    <div class="ld-wrap">
-      <div class="ld-emoji">🔮</div>
-      <div class="ld-title pf">ANALYZING...</div>
-      <div class="ld-bar-wrap">
-        <div class="ld-bar"><div class="ld-bar-fill" id="ld-fill"></div></div>
-      </div>
-      <div class="ld-pct pf" id="ld-pct">0%</div>
-      <div class="ld-tip">正在扫描你的灵魂数据</div>
-    </div>
-  </div>
+    <div class="toast" id="toast"></div>
 
-  <!-- ===== RESULT ===== -->
-  <div id="sec-result" class="section">
-    <div class="r-wrap" id="r-wrap"></div>
-  </div>
-
-</div>
-</div>
-
-<script>
-/* ==================== DATA ==================== */
-const DIM_NAMES=['自尊自信','自我清晰度','核心价值观','依恋安全感','情感投入度','边界与独立','世界观倾向','规则与灵活','人生意义感','动机取向','决策风格','执行模式','社交主动性','人际边界','表达与真实'];
-const MODEL_NAMES=['自我认知','情感模式','人生态度','行动驱力','社交风格'];
-const MODEL_EMOJI=['🪞','💗','🌍','⚡','🎭'];
-
-const questions=[
-{dim:'S1',model:'自我认知',text:'照镜子照了5分钟后，你的内心独白是——',
- opts:[{t:'我真是百看不厌，颜值就是正义',s:2},{t:'嗯，能看，今天状态还行',s:1},{t:'镜子裂了也比照到我强',s:0}]},
-{dim:'S2',model:'自我认知',text:'朋友问你「你到底是什么样的人」，你？',
- opts:[{t:'如数家珍，三句话说得明明白白',s:2},{t:'嗯…每次说的不太一样，看心情吧',s:1},{t:'你问我？我自己也想知道啊',s:0}]},
-{dim:'S3',model:'自我认知',text:'全世界都说你的选择是错的，你？',
- opts:[{t:'谢谢关心，但我偏不改',s:2},{t:'有道理的部分我接受，其余再说',s:1},{t:'好吧好吧，你们说啥就是啥',s:0}]},
-{dim:'E1',model:'情感模式',text:'喜欢的人已读不回3小时了，你？',
- opts:[{t:'人家有自己的事呗，正常的',s:2},{t:'有一点点在意，但忍住不问',s:1},{t:'聊天记录已经翻了8遍了',s:0}]},
-{dim:'E2',model:'情感模式',text:'你对待感情的态度更接近哪种？',
- opts:[{t:'爱就轰轰烈烈 All in，不留退路',s:2},{t:'会认真投入，但留一分清醒给自己',s:1},{t:'随缘吧，感情这事强求不来',s:0}]},
-{dim:'E3',model:'情感模式',text:'最好的朋友搬去了另一个城市，你？',
- opts:[{t:'祝福！各自精彩，有空再聚',s:2},{t:'难过一阵子，但慢慢能好',s:1},{t:'感觉生活塌了一角，像被抛弃了',s:0}]},
-{dim:'A1',model:'人生态度',text:'你觉得这个世界本质上是？',
- opts:[{t:'虽然有Bug，但大方向在变好',s:2},{t:'一半光明一半黑暗，凑合着过',s:1},{t:'一个巨大的草台班子罢了',s:0}]},
-{dim:'A2',model:'人生态度',text:'导航说左转，但你直觉觉得右转更快——',
- opts:[{t:'方向盘已经打右了，直觉yyds',s:2},{t:'犹豫一下…还是听导航吧',s:1},{t:'100%听导航，数据不会骗人',s:0}]},
-{dim:'A3',model:'人生态度',text:'半夜突然醒来想到「人活着到底为了啥」——',
- opts:[{t:'为了还没实现的那些目标啊！',s:2},{t:'不知道，但明天的奶茶还是要喝',s:1},{t:'别问了，问就是虚无',s:0}]},
-{dim:'Ac1',model:'行动驱力',text:'是什么让你早上能从床上爬起来？',
- opts:[{t:'今天的目标还没达成，冲！',s:2},{t:'闹钟响第三遍了，不起要迟到',s:1},{t:'是膀胱，只有膀胱',s:0}]},
-{dim:'Ac2',model:'行动驱力',text:'菜单上有100道菜，你怎么点？',
- opts:[{t:'已根据性价比和营养搭配算好了',s:2},{t:'看了5分钟，选了个顺眼的',s:1},{t:'闭眼一指，交给命运',s:0}]},
-{dim:'Ac3',model:'行动驱力',text:'你买了一门网课，最后通常？',
- opts:[{t:'完成100%，笔记做了三本',s:2},{t:'看了前三节，后面找时间再说',s:1},{t:'收藏 = 学会，这是我的学习方法',s:0}]},
-{dim:'So1',model:'社交风格',text:'新来了一个同事/同学，你会？',
- opts:[{t:'主动走过去打招呼，当天加微信',s:2},{t:'点头微笑，等找机会慢慢认识',s:1},{t:'谁？不认识不主动不拒绝',s:0}]},
-{dim:'So2',model:'社交风格',text:'朋友找你借一笔不小的钱，你？',
- opts:[{t:'看关系看金额，超线就委婉拒绝',s:2},{t:'有点为难，但不好意思说不',s:1},{t:'朋友开口了肯定借啊，不借伤感情',s:0}]},
-{dim:'So3',model:'社交风格',text:'朋友做了道巨难吃的菜问你好不好吃？',
- opts:[{t:'实话实说，然后建议怎么改进',s:2},{t:'嗯…挺有特色的！（微笑）',s:1},{t:'好吃好吃！（疯狂扒饭掩饰表情）',s:0}]}
-];
-
-const types=[
-{code:'IMSB',name:'自我攻击者',emoji:'🤜',tagline:'最大的敌人就是自己',
- vec:[0,1,1,0,1,0,0,1,0,1,1,1,1,0,2],
- desc:'别人还没开口批评你，你已经把自己骂了三遍。你的内心住着一个24小时在线的差评师，专门否定你的一切成就。"这也配叫成功？""肯定是运气好。"但说真的，能把自我批评做到如此精细，也是一种令人窒息的才华。',
- tags:['精准自我打击','内心差评师','反向自恋','清醒式自卑']},
-{code:'BOSS',name:'领导者',emoji:'👔',tagline:'你的人生不允许没有KPI',
- vec:[2,2,2,1,1,2,2,1,2,2,2,2,2,2,1],
- desc:'开会你主持，聚餐你点菜，AA制的账单你来算。你天生就是站在最前面的那个人。你的人生字典里没有"随便"二字，因为你已经替所有人做好了决定。',
- tags:['天生领袖','效率狂人','掌控全局','行走的KPI']},
-{code:'MUM',name:'妈妈',emoji:'👩‍🍳',tagline:'不管几岁，灵魂都是老母亲',
- vec:[1,1,2,2,2,0,2,1,2,1,1,1,2,0,1],
- desc:'朋友出门你叮嘱穿秋裤，同事加班你送吃的，你的微信收藏全是养生文章。你操心别人的程度远超操心自己。你不是在照顾别人，你是停不下来——母爱如山，山就是你。',
- tags:['操心本体','穿秋裤大使','投喂狂魔','唠叨即是爱']},
-{code:'FAKE',name:'伪人',emoji:'🎭',tagline:'社交面具比衣服还多',
- vec:[1,0,0,1,1,1,1,2,1,1,1,1,2,1,0],
- desc:'在老板面前是一个人，在朋友面前是另一个人，在家又是第三个人。你不是虚伪，你只是太会"因地制宜"了。但有时候连你自己都忘了——摘下面具后，里面到底是谁？',
- tags:['千面人','演技派','适应力满分','自我迷失中']},
-{code:'DEAD',name:'死者',emoji:'⚰️',tagline:'精神状态：已注销',
- vec:[0,0,0,0,0,1,0,0,0,0,0,0,0,1,0],
- desc:'你已经"死"了，只是还在呼吸。对一切失去兴趣，周末能在床上躺48小时不翻身。别人问你有什么感受，你说"没有"——这不是敷衍，这是实话。你的精神世界已经关机了，请勿打扰。',
- tags:['精神关机','情绪归零','人间蒸发','活着就是最大努力']},
-{code:'ZZZZ',name:'装死者',emoji:'😴',tagline:'只要我装得够死，麻烦就追不上我',
- vec:[1,1,1,1,0,2,1,1,0,0,1,0,0,2,0],
- desc:'你不是真的死了，你是在"战略性休眠"。遇到问题？装没看见。有人找你？装没听到。老板发消息？手机恰好没电。你的逃避技术炉火纯青，堪称当代鸵鸟行为艺术家。',
- tags:['战略性休眠','已读不回大师','鸵鸟本鸵','逃避可耻但有用']},
-{code:'GOGO',name:'行者',emoji:'🏃',tagline:'想到就干，干完再说',
- vec:[2,1,2,1,1,2,2,1,2,2,1,2,1,1,2],
- desc:'你是行动派中的行动派。别人还在做计划，你已经把事做完了。想到什么就立刻执行，从不犹豫。你的座右铭："先干了再说，大不了重来。" 你可能没有最好的计划，但你永远有最快的速度。',
- tags:['行动力爆表','先做再说','零拖延','人形推土机']},
-{code:'FUCK',name:'草者',emoji:'🌿',tagline:'对这世界充满了「草」',
- vec:[1,1,1,0,1,1,0,2,0,1,0,1,1,0,2],
- desc:'你对这个世界的评价就一个字——草。看到不公平的事——草！遇到离谱的人——草！被生活毒打——草！但你的"草"里藏着真性情，你是这个虚伪世界里最真实的一股泥石流。粗糙，但纯粹。',
- tags:['行走的感叹号','真性情','暴躁老哥/姐','口嗨哲学家']},
-{code:'CTRL',name:'拿捏者',emoji:'🎮',tagline:'一切尽在掌控之中',
- vec:[2,2,2,1,1,2,1,0,2,2,2,2,1,2,1],
- desc:'你把一切都拿捏得死死的——工作、感情、社交，甚至发朋友圈的时间都经过精密计算。你是朋友圈里最靠谱的人，也是最让人有压力的人。你不允许任何事脱离轨道，因为——失控令你窒息。',
- tags:['全局掌控','精密计算','靠谱代名词','完美主义者']},
-{code:'HHHH',name:'傻乐者',emoji:'😂',tagline:'哈哈哈哈哈哈哈哈',
- vec:[1,0,0,2,1,1,2,2,1,0,0,0,2,0,2],
- desc:'哈哈哈哈哈——这就是你的人生BGM。你永远在笑，不管发生什么都能找到快乐的点。股市崩了？哈哈哈。被裁了？哈哈哈。朋友觉得你没心没肺，但你觉得：人生苦短，不笑白不笑。',
- tags:['快乐本体','没心没肺','治愈系笑容','乐观到离谱']},
-{code:'SEXY',name:'尤物',emoji:'💃',tagline:'自带十米魅力光环',
- vec:[2,2,1,1,2,1,2,2,2,1,0,1,2,1,1],
- desc:'你走到哪里都自带聚光灯。不一定是因为颜值，而是你身上那股自信和松弛感让人移不开眼。你知道自己有魅力，而且你不装——这种坦荡的性感，才是真正的尤物。',
- tags:['魅力值拉满','自信松弛','行走的荷尔蒙','万人迷体质']},
-{code:'OJBK',name:'无所谓人',emoji:'🤷',tagline:'行，都行，你说了算',
- vec:[1,1,1,2,0,2,1,2,1,0,1,0,0,2,2],
- desc:'"吃啥？""都行。""去哪？""随便。""这事你怎么看？""OJBK。"你不是没主见，你是真的觉得大多数事情不值得纠结。你是佛系青年的究极进化体——万事万物，皆可无所谓。',
- tags:['终极佛系','都行随便','情绪稳如老狗','人间无所谓']},
-{code:'POOR',name:'贫穷者',emoji:'💸',tagline:'钱包比脸还干净',
- vec:[0,1,1,0,1,1,0,0,1,1,1,1,1,1,1],
- desc:'你穷，你清楚，但你坦然。你的银行余额和自信心成反比，但你依然在这个处处要钱的世界顽强地活着。你的理财方式：先看价格标签，再决定需不需要。月底的你，连呼吸都觉得在烧钱。',
- tags:['月光族代表','精准贫穷','余额恐惧症','穷且快乐着']},
-{code:'OH-NO',name:'唉不人',emoji:'😰',tagline:'人生就是一连串的「唉」',
- vec:[0,1,1,0,2,0,0,0,0,1,0,0,1,0,1],
- desc:'还没发生的事你已经担心了八遍，发生了的事你要后悔八遍。焦虑是你的底色，紧张是你的日常。你是自己人生的首席焦虑官——24小时在线，全年无休。',
- tags:['焦虑本体','首席担心官','灾难预演师','杞人忧天Pro']},
-{code:'MONK',name:'僧人',emoji:'🧘',tagline:'四大皆空，万事随缘',
- vec:[2,2,2,2,0,2,1,1,2,0,2,0,0,2,2],
- desc:'你已经超脱了世俗的烦恼，达到了别人理解不了的平静。不是你不想卷，是你看透了卷的尽头——还是空。你的段位太高，KPI追不上你，焦虑找不到你。阿弥陀佛。',
- tags:['四大皆空','精神净土','超脱凡尘','看破红尘']},
-{code:'SHIT',name:'狗屎人',emoji:'💩',tagline:'我到哪里，哪里就有惊喜',
- vec:[1,0,0,0,1,0,0,2,0,1,0,1,2,0,2],
- desc:'你到哪里，"惊喜"就到哪里——当然是加引号的那种。不是你故意的，但你总能把事情搞出意想不到的效果。你是行走的混乱制造机，但朋友们已经习惯了——甚至开始期待你的表演。',
- tags:['惊喜制造机','行走的Bug','混乱之源','离谱但可爱']},
-{code:'THAN-K',name:'感恩者',emoji:'🙏',tagline:'感恩一切，包括这道测试题',
- vec:[1,1,2,2,2,1,2,1,2,1,1,1,2,1,1],
- desc:'早餐好吃——感恩！天气好——感恩！没迟到——感恩！你对一切心怀感激，正能量浓度高到快溢出屏幕。别人觉得你活在童话里，但你是真心的。',
- tags:['正能量发电站','感恩达人','温暖小太阳','真诚善良']},
-{code:'MALO',name:'吗喽',emoji:'🐒',tagline:'快乐的社畜小吗喽',
- vec:[0,0,0,1,1,1,1,2,0,1,0,1,2,0,2],
- desc:'恭喜你，你是一只快乐的小吗喽。没什么远大理想，就想好好活着、吃点好的、摸点鱼。上班如上坟，但坟头蹦迪你也在行。你是社畜世界里最清醒的人——知道自己就是个吗喽，然后坦然地享受香蕉。',
- tags:['快乐吗喽','清醒社畜','摸鱼达人','坟头蹦迪']},
-{code:'ATM-er',name:'送钱者',emoji:'🏧',tagline:'行走的人形提款机',
- vec:[0,0,1,1,2,0,1,1,1,1,0,1,2,0,0],
- desc:'你是朋友圈的移动ATM。请客吃饭你买单，朋友缺钱你转账，对所有人大方唯独对自己抠门。你不是钱多，你只是不好意思说"不"。你的社交关系靠钱包维系——可怕的是你已经习惯了。',
- tags:['移动提款机','请客狂魔','不会拒绝','讨好型人格']},
-{code:'THIN-K',name:'思考者',emoji:'🤔',tagline:'我思故我在，我在故我想',
- vec:[1,2,2,1,0,2,1,0,2,1,2,1,0,2,1],
- desc:'你的大脑24小时在运转，连睡觉都在想问题。这顿饭为什么好吃？那个人为什么说这句话？宇宙的尽头是什么？你是朋友圈的人形哲学引擎——想得比做得多，但想的质量是真的高。',
- tags:['人形CPU','深度思考','过度分析','哲学引擎']},
-{code:'SOLO',name:'孤儿',emoji:'🚶',tagline:'一个人，挺好的',
- vec:[1,2,1,0,0,2,1,1,1,1,2,1,0,2,2],
- desc:'独来独往是你的常态。不是没人找你玩，是你觉得一个人挺好的。你的朋友不多，但每一个都经过严格筛选。你享受孤独，在别人觉得寂寞的地方，你找到了整个宇宙。',
- tags:['独行侠','社交极简','享受孤独','精神自由']},
-{code:'LOVE-R',name:'多情者',emoji:'💘',tagline:'心太大，装得下所有人',
- vec:[1,0,0,0,2,0,1,2,1,2,0,1,2,0,1],
- desc:'你的心太大了，大到能装下所有人。你容易心动、容易投入、也容易受伤。你不是花心，你只是对每一段感情都太认真——只是认真的频率有点高。你的人生是一部永不停播的恋爱综艺。',
- tags:['恋爱脑','容易心动','深情种子','感情充沛']},
-{code:'WOC!',name:'握草人',emoji:'😱',tagline:'卧槽！？',
- vec:[1,0,1,1,2,1,0,2,0,0,0,0,2,0,2],
- desc:'你的日常就是不停地被震惊——看新闻：卧槽！听八卦：卧槽！照镜子：卧槽！你是朋友圈的首席震惊官，表情包库存99%都是震惊系列。你的情绪来得快去得也快，但每一个"卧槽"都是真心的。',
- tags:['首席震惊官','表情包本人','情绪过山车','大惊小怪']},
-{code:'DRUN-K',name:'酒鬼',emoji:'🍺',tagline:'清醒太痛苦了，不如微醺',
- vec:[0,0,0,0,1,0,0,2,0,0,0,0,1,0,1],
- desc:'你的灵魂泡在酒精里——不是真的爱喝酒，是清醒太痛苦了。人生没意义？喝一杯。工作太累？喝一杯。你在微醺中找到真理，在宿醉中丢失记忆。你说酒后吐真言，别人说你只是吐了。',
- tags:['微醺哲学家','清醒恐惧症','深夜酒鬼','灵魂泡酒中']},
-{code:'IMFW',name:'废物',emoji:'🗑️',tagline:'恭喜你解锁了最真实的自己',
- vec:[0,1,0,1,0,1,0,1,0,0,0,0,1,1,1],
- desc:'你对自己的评价就俩字——废物。但说这话的时候居然还挺骄傲。什么都不想做，什么都不想要，你是欲望最低的人类。某种程度上，你已经超越了内卷和躺平——你直接消失了。',
- tags:['自封废物','零欲望','超越躺平','人间蒸发预备役']}
-];
-
-/* ==================== STATE ==================== */
-let curQ=0, ans=new Array(15).fill(-1);
-
-/* ==================== STARS BG ==================== */
-(function(){
-  const c=document.getElementById('stars'),x=c.getContext('2d');
-  let w,h,stars=[];
-  function rs(){w=c.width=innerWidth;h=c.height=innerHeight;stars=[];
-    for(let i=0;i<80;i++)stars.push({x:Math.random()*w,y:Math.random()*h,s:Math.random()*1.5+.5,sp:Math.random()*.3+.1,a:Math.random()})}
-  addEventListener('resize',rs);rs();
-  (function d(){
-    x.fillStyle='#0f0e17';x.fillRect(0,0,w,h);
-    stars.forEach(s=>{s.a+=.01;
-      const al=Math.abs(Math.sin(s.a))*.6+.2;
-      x.fillStyle=`rgba(255,255,255,${al})`;x.fillRect(Math.round(s.x),Math.round(s.y),Math.ceil(s.s),Math.ceil(s.s));
-      s.y+=s.sp;if(s.y>h){s.y=0;s.x=Math.random()*w}});
-    requestAnimationFrame(d);
-  })();
-})();
-
-/* ==================== NAV ==================== */
-function show(id){document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));document.getElementById('sec-'+id).classList.add('active')}
-
-function startQuiz(){curQ=0;ans.fill(-1);show('quiz');renderQ()}
-
-/* ==================== QUIZ ==================== */
-function renderQ(){
-  const q=questions[curQ], pct=Math.round((curQ/15)*100);
-  // Back button
-  document.getElementById('btn-back').className=curQ>0?'q-back':'q-back hidden';
-  // Level
-  document.getElementById('q-level').textContent=`LEVEL ${String(curQ+1).padStart(2,'0')}/15`;
-  // HP bar
-  document.getElementById('hp-right').textContent=pct+'%';
-  const fill=document.getElementById('hp-fill');
-  fill.style.width=pct+'%';
-  fill.className='hp-fill '+(pct<33?'seg1':pct<66?'seg2':'seg3');
-  // Card
-  const card=document.getElementById('q-card');card.style.animation='none';card.offsetHeight;card.style.animation='pixelIn .3s steps(6)';
-  document.getElementById('q-num').textContent='Q'+String(curQ+1).padStart(2,'0');
-  document.getElementById('q-dim').textContent=MODEL_EMOJI[Math.floor(curQ/3)]+' '+q.model+' · '+DIM_NAMES[curQ];
-  document.getElementById('q-text').textContent=q.text;
-  
-  const ow=document.getElementById('q-opts');ow.innerHTML='';
-  ['A','B','C'].forEach((l,i)=>{
-    const d=document.createElement('div');
-    d.className='opt'+(ans[curQ]===q.opts[i].s?' selected':'');
-    d.innerHTML=`<span class="opt-key">${l}</span><span class="opt-text">${q.opts[i].t}</span>`;
-    d.onclick=()=>pick(i,q.opts[i].s,d);
-    ow.appendChild(d);
-  });
-}
-
-function pick(idx,score,el){
-  document.querySelectorAll('.opt').forEach(o=>o.classList.remove('selected'));
-  el.classList.add('selected');
-  ans[curQ]=score;
-  
-  setTimeout(()=>{
-    if(curQ<14){curQ++;renderQ()}
-    else{show('loading');startLoading()}
-  },350);
-}
-
-function goBack(){
-  if(curQ>0){curQ--;renderQ()}
-}
-
-/* ==================== LOADING ==================== */
-function startLoading(){
-  let p=0;const fill=document.getElementById('ld-fill'),pct=document.getElementById('ld-pct');
-  fill.style.width='0%';
-  const iv=setInterval(()=>{
-    p+=Math.random()*12+3;if(p>100)p=100;
-    fill.style.width=p+'%';pct.textContent=Math.round(p)+'%';
-    if(p>=100){clearInterval(iv);setTimeout(showResult,400)}
-  },200);
-}
-
-/* ==================== SCORING ==================== */
-function compute(){
-  if(ans[6]===0&&ans[8]===0&&ans[9]===0&&ans[11]===0&&ans[7]===2) return types.find(t=>t.code==='DRUN-K');
-  let best=types[0],bd=Infinity;
-  types.forEach(t=>{if(t.code==='DRUN-K')return;let d=0;for(let i=0;i<15;i++)d+=Math.abs(ans[i]-t.vec[i]);if(d<bd){bd=d;best=t}});
-  return best;
-}
-
-/* ==================== RESULT ==================== */
-function showResult(){
-  const t=compute();show('result');
-  // Flash
-  const fl=document.createElement('div');fl.className='flash';document.body.appendChild(fl);setTimeout(()=>fl.remove(),500);
-  fireConfetti();
-  
-  const ms=[];for(let m=0;m<5;m++)ms.push(Math.round((ans[m*3]+ans[m*3+1]+ans[m*3+2])/6*100));
-  const da=ans.map((a,i)=>({n:DIM_NAMES[i],c:a>=2?'h':a>=1?'m':'l',t:a>=2?'高':a>=1?'中':'低'}));
-  
-  document.getElementById('r-wrap').innerHTML=`
-    <div class="r-achieve"><div class="r-achieve-text pf">★ ACHIEVEMENT UNLOCKED ★</div></div>
-    <div class="r-card pbox">
-      <div class="r-label">你的人格类型是：</div>
-      <span class="r-emoji">${t.emoji}</span>
-      <div class="r-name">${t.name}</div>
-      <div class="r-code pf">${t.code}</div>
-      <div class="r-line"></div>
-      <div class="r-tagline">「${t.tagline}」</div>
-      <div class="r-desc">${t.desc}</div>
-      <div class="r-tags">${t.tags.map(g=>`<span class="r-tag">${g}</span>`).join('')}</div>
-    </div>
-    <div class="r-dark pbox">
-      <div class="r-dark-title pf">RADAR STATS</div>
-      <canvas id="radar" width="280" height="280" style="display:block;margin:0 auto"></canvas>
-    </div>
-    <div class="r-dark pbox">
-      <div class="r-dark-title pf">DIMENSION ANALYSIS</div>
-      <div class="r-dim-tags">${da.map(d=>`<span class="dt ${d.c}">${d.n} ${d.t}</span>`).join('')}</div>
-    </div>
-    <div class="r-btns">
-      <button class="btn-r p" onclick="startQuiz()">▶ 再来一局</button>
-      <button class="btn-r s" onclick="shareR('${t.code}','${t.name}','${t.tagline}')">◆ 分享战绩</button>
-    </div>`;
-  setTimeout(()=>drawRadar(ms),100);
-}
-
-/* ==================== RADAR ==================== */
-function drawRadar(sc){
-  const cv=document.getElementById('radar');if(!cv)return;
-  const c=cv.getContext('2d'),dp=devicePixelRatio||1;
-  cv.width=280*dp;cv.height=280*dp;cv.style.width='280px';cv.style.height='280px';c.scale(dp,dp);
-  const cx=140,cy=140,R=95,N=5,st=Math.PI*2/N,sa=-Math.PI/2;
-  // Grid
-  for(let r=1;r<=4;r++){const rr=R*r/4;c.beginPath();for(let i=0;i<=N;i++){const a=sa+i*st,x=cx+rr*Math.cos(a),y=cy+rr*Math.sin(a);i?c.lineTo(x,y):c.moveTo(x,y)}c.strokeStyle='rgba(255,255,255,.06)';c.lineWidth=1;c.stroke()}
-  // Axes
-  for(let i=0;i<N;i++){const a=sa+i*st;c.beginPath();c.moveTo(cx,cy);c.lineTo(cx+R*Math.cos(a),cy+R*Math.sin(a));c.strokeStyle='rgba(255,255,255,.04)';c.stroke()}
-  // Data - draw with steps to look pixely
-  c.beginPath();sc.forEach((s,i)=>{const r=R*s/100,a=sa+i*st,x=cx+r*Math.cos(a),y=cy+r*Math.sin(a);i?c.lineTo(x,y):c.moveTo(x,y)});c.closePath();
-  c.fillStyle='rgba(0,230,118,.15)';c.fill();c.strokeStyle='rgba(0,230,118,.8)';c.lineWidth=2;c.stroke();
-  // Dots & labels
-  sc.forEach((s,i)=>{const r=R*s/100,a=sa+i*st,x=cx+r*Math.cos(a),y=cy+r*Math.sin(a);
-    c.fillStyle='#00e676';c.fillRect(x-3,y-3,6,6);// pixel dot
-    const lx=cx+(R+20)*Math.cos(a),ly=cy+(R+20)*Math.sin(a);
-    c.fillStyle='#666680';c.font='11px sans-serif';c.textAlign='center';c.textBaseline='middle';
-    c.fillText(MODEL_EMOJI[i]+MODEL_NAMES[i],lx,ly);
-    const sx=cx+(R+36)*Math.cos(a),sy=cy+(R+36)*Math.sin(a);
-    c.fillStyle='#00e676';c.font='bold 10px monospace';c.fillText(s+'%',sx,sy);
-  });
-}
-
-/* ==================== CONFETTI ==================== */
-function fireConfetti(){
-  const cv=document.getElementById('confetti-canvas'),c=cv.getContext('2d');
-  cv.width=innerWidth;cv.height=innerHeight;
-  const cols=['#00e676','#ffd740','#ff5252','#18ffff','#ff80ab','#b388ff'];
-  let ps=[];for(let i=0;i<100;i++)ps.push({x:Math.random()*cv.width,y:-20-Math.random()*200,
-    w:Math.random()*6+4,h:Math.random()*4+3,c:cols[~~(Math.random()*cols.length)],
-    dx:(Math.random()-.5)*4,dy:Math.random()*3+2,life:1});
-  let f=0;
-  (function d(){
-    c.clearRect(0,0,cv.width,cv.height);
-    ps.forEach(p=>{p.x+=p.dx;p.y+=p.dy;p.dy+=.04;p.life-=.004;if(p.life<=0)return;
-      c.globalAlpha=p.life;c.fillStyle=p.c;c.fillRect(Math.round(p.x),Math.round(p.y),p.w,p.h)});// pixel confetti - no rotation, square
-    c.globalAlpha=1;ps=ps.filter(p=>p.life>0);
-    if(ps.length&&f<400){f++;requestAnimationFrame(d)}else c.clearRect(0,0,cv.width,cv.height);
-  })();
-}
-
-/* ==================== SHARE ==================== */
-function shareR(code,name,tag){
-  const t=`🎮 我的SBTI人格是【${code} · ${name}】\n「${tag}」\n\n★ ACHIEVEMENT UNLOCKED ★\n来测测你是什么人格 👉`;
-  if(navigator.clipboard){navigator.clipboard.writeText(t).then(()=>alert('✅ 战绩已复制，快去分享！')).catch(()=>prompt('复制分享：',t))}else prompt('复制分享：',t);
-}
-
-// Keyboard support
-document.addEventListener('keydown',e=>{
-  if(!document.getElementById('sec-quiz').classList.contains('active'))return;
-  if(e.key==='a'||e.key==='A'||e.key==='1'){const o=document.querySelectorAll('.opt');if(o[0])o[0].click()}
-  if(e.key==='b'||e.key==='B'||e.key==='2'){const o=document.querySelectorAll('.opt');if(o[1])o[1].click()}
-  if(e.key==='c'||e.key==='C'||e.key==='3'){const o=document.querySelectorAll('.opt');if(o[2])o[2].click()}
-  if(e.key==='Backspace'||e.key==='ArrowLeft')goBack();
-});
-</script>
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+    <script src="app.js"></script>
 </body>
 </html>
